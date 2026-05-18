@@ -12,12 +12,18 @@ def index():
             url = "https://" + url
         try:
             start = time.time()
-            response = requests.get(url, timeout=5)
+            headers = {
+                   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36",
+                    "Accept-Language": "en-US,en;q=0.9",
+                    "Accept": "text/html,application/xhtml+xml",
+                    "Connection": "keep-alive"
+            }
+            response = requests.get(url,headers=headers, timeout=5)
             end = time.time()
 
             result = {
                 "url": url,
-                "status": "Online" if response.status_code == 200 else "Issue",
+                "status": "Online" if response.status_code <500 else "Issue",
                 "code": response.status_code,
                 "time": round((end - start) * 1000, 2)
             }
