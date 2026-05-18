@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template,request
 import requests
 import time 
 
@@ -8,6 +8,8 @@ def index():
     result=None
     if request.method=="POST" :
         url = request.form["url"]
+        if not url.startswith(("https://")):
+            url = "https://" + url
         try:
             start = time.time()
             response = requests.get(url, timeout=5)
@@ -27,4 +29,4 @@ def index():
             }
     return render_template("index.html",result=result)
 if __name__ =="__main__":
-    app.run(debug="True")
+    app.run()
